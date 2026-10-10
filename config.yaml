@@ -60,7 +60,7 @@ dns:
   enhanced-mode: fake-ip
   fake-ip-range: 198.18.0.1/16
   fake-ip-range6: fdfe:dcba:9876::1/64
-  fake-ip-filter: ['rule-set:connectivity-check', 'rule-set:geolocation-cn', 'rule-set:ntp', 'rule-set:private']
+  fake-ip-filter: ['rule-set:fakeip-filter', 'rule-set:geolocation-cn', 'rule-set:private']
   use-hosts: true
   use-system-hosts: true
   nameserver: *foreignDNS
@@ -341,28 +341,28 @@ rule-providers:
     url: 'https://cdn.jsdmirror.com/gh/217heidai/adblockfilters@main/rules/adblockmihomo.mrs'
     path: './providers/rule/adblockmihomo.mrs'
     path-in-bundle: 'geo/geosite/category-ads-all.mrs'
-  connectivity-check:
+  fakeip-filter:
     <<: *rule_providers_domain
-    url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/connectivity-check.mrs'
-    path: './providers/rule/connectivity-check.mrs'
-    path-in-bundle: 'geo/geosite/connectivity-check.mrs'
-  ntp:
-    <<: *rule_providers_domain
-    url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/category-ntp.mrs'
-    path: './providers/rule/ntp.mrs'
-    path-in-bundle: 'geo/geosite/category-ntp.mrs'
+    url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/fakeip-filter.mrs'
+    path: './providers/rule/fakeip-filter.mrs'
+    path-in-bundle: 'geo/geosite/fakeip-filter.mrs'
 
   # 直连规则集
+  fcm:
+    <<: *rule_providers_domain
+    url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/googlefcm.mrs'
+    path: './providers/rule/fcm.mrs'
+    path-in-bundle: 'geo/geosite/googlefcm.mrs'
   games_cn:
     <<: *rule_providers_domain
     url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/category-games@cn.mrs'
     path: './providers/rule/games@cn.mrs'
     path-in-bundle: 'geo/geosite/category-games@cn.mrs'
-  googlefcm:
+  google_cn:
     <<: *rule_providers_domain
-    url: 'https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/googlefcm.mrs'
-    path: './providers/rule/googlefcm.mrs'
-    path-in-bundle: 'geo/geosite/googlefcm.mrs'
+    url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/google@cn.list'
+    path: './providers/rule/google@cn.mrs'
+    path-in-bundle: 'geo/geosite/google@cn.mrs'
   microsoft_cn:
     <<: *rule_providers_domain
     url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/microsoft@cn.mrs'
@@ -412,7 +412,7 @@ rule-providers:
     path-in-bundle: 'geo/geosite/category-games-!cn.mrs'
   github:
     <<: *rule_providers_domain
-    url: 'https://cdn.jsdmirror.com/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/github.mrs'
+    url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/github.mrs'
     path: './providers/rule/github.mrs'
     path-in-bundle: 'geo/geosite/github.mrs'
   youtube:
@@ -469,8 +469,9 @@ rule-providers:
 # 自定义规则配置
 rules:
   # 直连规则
+  - RULE-SET,fcm,本地直连
   - RULE-SET,games_cn,本地直连 # 已包含 steam 下载域名
-  - RULE-SET,googlefcm,本地直连
+  - RULE-SET,google_cn,本地直连
   - RULE-SET,microsoft_cn,本地直连
   - RULE-SET,private,本地直连
   - RULE-SET,private_ip,本地直连,no-resolve
@@ -493,7 +494,6 @@ rules:
   - RULE-SET,telegram_ip,Telegram,no-resolve
   - RULE-SET,x,X
   - RULE-SET,x_ip,X,no-resolve
-  - DOMAIN-KEYWORD,mcp,AI
 
   # 兜底规则
   - RULE-SET,geolocation-cn,本地直连
