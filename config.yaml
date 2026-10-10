@@ -378,10 +378,10 @@ rule-providers:
     url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geoip/private.mrs'
     path: './providers/rule/private_ip.mrs'
     path-in-bundle: 'geo/geoip/private.mrs'
-  steam_asn:
+  valve_asn:
     <<: *rule_providers_ip
     url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/asn/AS32590.mrs'
-    path: './providers/rule/steam_asn.mrs'
+    path: './providers/rule/valve_asn.mrs'
     path-in-bundle: 'asn/AS32590.mrs'
   geolocation-cn:
     <<: *rule_providers_domain
@@ -475,7 +475,7 @@ rules:
   - RULE-SET,microsoft_cn,本地直连
   - RULE-SET,private,本地直连
   - RULE-SET,private_ip,本地直连,no-resolve
-  - RULE-SET,steam_asn,本地直连,no-resolve
+  - RULE-SET,valve_asn,本地直连,no-resolve
 
   # 拦截规则
   - RULE-SET,adblockmihomo,广告拦截
