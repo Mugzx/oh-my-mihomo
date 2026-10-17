@@ -25,9 +25,8 @@ proxy-providers:
 
 # 自定义节点配置
 proxies:
-  - { name: 'DIRECT-DUAL', type: direct }
-  - { name: 'DIRECT-IPv4-PREF', type: direct, ip-version: ipv4-prefer }
-  - { name: 'DIRECT-IPv6-PREF', type: direct, ip-version: ipv6-prefer }
+  - { name: 'IPv4-PREF', type: direct, ip-version: ipv4-prefer }
+  - { name: 'IPv6-PREF', type: direct, ip-version: ipv6-prefer }
 
 # 基础全局配置
 mode: rule
@@ -173,7 +172,7 @@ group_filter:
     }
   low_filter:
     &low_filter {
-      filter: '(?i)(^(?!.*(?:剩|期)).*(?:(?<!\d)0(\.[0-9]|[*×✕✖⨯⨉x倍]))|(?:[*×✕✖⨯⨉x]0)|^(?!.*(?:客户端|软件)).*下载|低倍|免费|(?<![A-Za-z])free(?![A-Za-z]))',
+      filter: '(?i)(^(?!.*(?:剩|期)).*(?:(?<![\d.])0(\.[0-9]|[*×✕✖⨯⨉x倍]))|(?:[*×✕✖⨯⨉x]0)|^(?!.*(?:客户端|软件)).*下载|低倍|免费|(?<![A-Za-z])free(?![A-Za-z]))',
     }
   high_filter:
     &high_filter {
@@ -216,6 +215,7 @@ proxy-groups:
 
   - name: 'Google'
     <<: [*group_common_select, *proxies_default]
+    default-selected: '手动选择'
     icon: 'https://cdn.jsdmirror.com/gh/Koolson/Qure@master/IconSet/Color/Google_Search.png'
 
   - name: 'Microsoft'
@@ -314,18 +314,18 @@ proxy-groups:
 
   - name: '本地直连'
     <<: *group_common_select
-    proxies: ['DIRECT-DUAL', 'DIRECT-IPv4-PREF', 'DIRECT-IPv6-PREF']
+    proxies: ['IPv4-PREF', 'IPv6-PREF']
     url: 'https://connectivitycheck.platform.hicloud.com/generate_204'
     icon: 'https://cdn.jsdmirror.com/gh/Koolson/Qure@master/IconSet/Color/Direct.png'
 
   - name: '广告拦截'
     <<: *group_common_select
-    proxies: ['REJECT', 'REJECT-DROP', 'PASS']
+    proxies: ['REJECT', 'PASS']
     icon: 'https://cdn.jsdmirror.com/gh/Koolson/Qure@master/IconSet/Color/AdBlack.png'
 
   - name: '漏网之鱼'
     <<: *group_common_select
-    proxies: ['本地直连', '默认代理', '手动选择']
+    proxies: ['本地直连', '默认代理']
     icon: 'https://cdn.jsdmirror.com/gh/Koolson/Qure@master/IconSet/Color/Puzzle.png'
 
 # 规则集通用配置
@@ -367,7 +367,7 @@ rule-providers:
     <<: *rule_providers_domain
     url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/microsoft@cn.mrs'
     path: './providers/rule/google@cn.mrs'
-    path-in-bundle: 'geo/geosite/microsoft@cn.mrs'
+    path-in-bundle: 'geo/geosite/google@cn.mrs'
   microsoft_cn:
     <<: *rule_providers_domain
     url: 'https://cdn.jsdmirror.com/gh/appshubcc/bett-rules@meta/geo/geosite/microsoft@cn.mrs'
